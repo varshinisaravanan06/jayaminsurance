@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Corporate Insurance Suggestions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+  <div class="navbar">
+    <div class="logo">JAYAM ASSOCIATES</div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="{{ url_for('services') }}">Services</a>
+      <a href="#">Partners</a>
+      <a href="{{ url_for('enquiry') }}">Get Quote</a>
+    </div>
+  </div>
+</header>
+<br>
+<center>
+<div class="container">
+    <h1>🏢 Recommended Corporate Insurance Policies</h1>
+    <br>
+    {% if policies %}
+        <div class="policy-grid">
+            {% for policy in policies %}
+            <div class="card">
+                <h3>{{ policy.company }}</h3>
+                <p><strong>Plan:</strong> {{ policy.plan }}</p>
+                <p><strong>Employee Limit:</strong> Up to {{ policy.employee_limit }}</p>
+                <p><strong>Price:</strong> {{ policy.price }}</p>
+                <p><strong>Features:</strong> {{ policy.features }}</p>
+
+                <form action="{{ url_for('policy_details') }}" method="GET">
+                    <input type="hidden" name="company" value="{{ policy.company }}">
+                    <input type="hidden" name="plan" value="{{ policy.plan }}">
+                    <input type="hidden" name="price" value="{{ policy.price }}">
+                    <input type="hidden" name="service" value="Corporate">
+
+                    <button type="submit" class="btn">
+                        Select Policy
+                    </button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No suitable corporate policies found for your requirement.</p>
+    {% endif %}
+<br>
+    <a href="/services" class="btn secondary">⬅ Back to Services</a>
+</div>
+<br>
+{% if session.selected_company %}
+<br>
+{% endif %}
+</center>
+<footer>
+    <p>© 2026 Jayam Associates | All Types of Insurance Consultancy</p>
+</footer>
+</body>
+</html>

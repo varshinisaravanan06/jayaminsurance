@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Policy - Jayam Insurance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        body {
+            background: linear-gradient(to right, #0f1635, #1c2354);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            flex: 1;
+        }
+        
+        .confirm-container {
+            max-width: 650px;
+            margin: 150px auto 50px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: #fff;
+            border: none;
+            padding: 0;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #bbb;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .policy-details-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 35px;
+            text-align: left;
+        }
+        
+        .policy-details-box h3 {
+            color: #a3bffa;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+        
+        .detail-label {
+            color: #aaa;
+            font-weight: 600;
+        }
+        
+        .detail-value {
+            color: #fff;
+            font-weight: 500;
+            text-align: right;
+        }
+        
+        .premium-row {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 15px;
+            align-items: center;
+        }
+        
+        .premium-label {
+            color: #aaa;
+            font-weight: 600;
+        }
+        
+        .premium-value {
+            color: #10b981;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .btn-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-download {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-download:hover {
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        
+        .btn-whatsapp:hover {
+            background: #1da851;
+            transform: translateY(-2px);
+        }
+        
+        .btn-email {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-email:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .return-link {
+            margin-top: 25px;
+        }
+        
+        .return-link a {
+            color: #a3bffa;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        
+        .return-link a:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    
+    <div class="confirm-container">
+        <div class="success-icon"><i class="fas fa-check"></i></div>
+        <h2>Confirm Your Selection</h2>
+        <p class="subtitle">Please review your selected policy details below.</p>
+
+        <div class="policy-details-box">
+            <h3>Policy Details</h3>
+            
+            <div class="detail-row">
+                <span class="detail-label">Insurance Type:</span> 
+                <span class="detail-value">{{ data.type }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Company:</span> 
+                <span class="detail-value">{{ data.policy_details.company }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Plan Name:</span> 
+                <span class="detail-value">{{ data.policy_details.policy }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Coverage:</span> 
+                <span class="detail-value">{{ data.policy_details.cover }}</span>
+            </div>
+            <div class="premium-row">
+                <span class="premium-label">Premium:</span> 
+                <span class="premium-value">{{ data.policy_details.premium }}</span>
+            </div>
+        </div>
+
+        <div style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid #10b981; padding: 15px 20px; text-align: left; margin-bottom: 25px; border-radius: 0 8px 8px 0;">
+            <p style="color: #10b981; font-weight: 700; margin-bottom: 8px; font-size: 1.05rem;"><i class="fas fa-info-circle"></i> NOTE :</p>
+            <ul style="color: #ddd; font-size: 0.95rem; margin: 0; padding-left: 20px; line-height: 1.6;">
+                <li>You can download the form as a PDF for your records.</li>
+                <li>You can chat with us on WhatsApp if you have any questions.</li>
+            </ul>
+        </div>
+
+        <div class="action-buttons">
+            <a href="{{ url_for('download_pdf') }}" class="btn-action btn-download">
+                <i class="fas fa-file-pdf"></i> Download Policy PDF
+            </a>
+
+            <a href="https://wa.me/919159981987?text=Hi, I am interested in {{ data.policy_details.company }} - {{ data.policy_details.policy }} ({{ data.type }} Insurance). Please guide me." target="_blank" class="btn-action btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+        </div>
+        
+        <div class="return-link">
+            <a href="{{ url_for('home') }}"><i class="fas fa-arrow-left"></i> Return to Home</a>
+        </div>
+    </div>
+    
+    {% include 'footer.html' %}
+</body>
+</html>

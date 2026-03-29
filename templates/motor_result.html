@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Motor Policy Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+  <div class="navbar">
+    <div class="logo">JAYAM ASSOCIATES</div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="{{ url_for('services') }}">Services</a>
+      <a href="#">Partners</a>
+      <a href="{{ url_for('enquiry') }}">Get Quote</a>
+    </div>
+  </div><br>
+</header>
+<center>
+    <br><br>
+<h2> ✅ Recommended Motor Policies</h2><br>
+{% if policies %}
+        <div class="policy-grid">
+        {% for policy in policies %}
+            <div class="policy-card">
+                <h3>{{ policy.name }}</h3>
+
+                <p><strong>Budget:</strong> {{ policy.budget }}</p>
+                <p><strong>Vehicle Type:</strong> {{ policy.vehicle }}</p>
+                <p><strong>Price:</strong> {{ policy.price }}</p>
+                <p><strong>Features:</strong> {{ policy.features }}</p>
+
+    <form action="{{ url_for('policy_details') }}" method="GET">
+    <input type="hidden" name="company" value="Motor Insurance">
+    <input type="hidden" name="plan" value="{{ policy.name }}">
+    <input type="hidden" name="premium" value="{{ policy.price }}">
+    <button type="submit" class="btn">Select Policy</button>
+</form>
+
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>No motor policies found for your selection.</p>
+    {% endif %}
+</div>
+{% if session.selected_company %}
+<br>
+{% endif %}
+
+    </center>
+<footer>
+    <p>© 2026 Jayam Associates | All Types of Insurance Consultancy</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Life Insurance | Jayam Associates</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+  <div class="navbar">
+    <div class="logo">JAYAM ASSOCIATES</div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="{{ url_for('services') }}">Services</a>
+      <a href="{{ url_for('partners') }}">Partners</a>
+      <a href="{{ url_for('enquiry') }}">Get Quote</a>
+    </div>
+  </div>
+</header>
+<br>
+<div class="life-container">
+  <h2>Life Insurance Details</h2>
+
+  <!-- Basic Info -->
+  <label>Full Name</label>
+  <input type="text" placeholder="Enter your name">
+
+  <label>Mobile Number</label>
+  <input type="tel" placeholder="Enter mobile number">
+
+  <label>Email</label>
+  <input type="email" placeholder="Enter email">
+
+  <label>City</label>
+  <input type="text" placeholder="Enter city">
+
+  <!-- Policy Purpose -->
+  <label>Purpose of Insurance</label>
+  <select>
+    <option>Family Protection</option>
+    <option>Income Protection</option>
+    <option>Loan Protection</option>
+    <option>Child Education</option>
+    <option>Retirement Planning</option>
+  </select>
+
+  <!-- Personal Details -->
+  <label>Date of Birth</label>
+  <input type="date">
+
+  <label>Gender</label>
+  <select>
+    <option>Male</option>
+    <option>Female</option>
+    <option>Other</option>
+  </select>
+
+  <label>Marital Status</label>
+  <select>
+    <option>Single</option>
+    <option>Married</option>
+  </select>
+
+  <!-- Employment -->
+  <label>Occupation</label>
+  <select>
+    <option>Salaried</option>
+    <option>Self Employed</option>
+    <option>Business</option>
+    <option>Student</option>
+  </select>
+
+  <label>Annual Income</label>
+  <select>
+    <option>Below 3 Lakhs</option>
+    <option>3 - 5 Lakhs</option>
+    <option>5 - 10 Lakhs</option>
+    <option>10+ Lakhs</option>
+  </select>
+
+  <!-- Lifestyle -->
+  <label>Do you smoke?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="smoke"> Yes</label>
+    <label><input type="radio" name="smoke" checked> No</label>
+  </div>
+
+  <label>Any existing medical condition?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="medical"> Yes</label>
+    <label><input type="radio" name="medical" checked> No</label>
+  </div>
+
+  <!-- Coverage -->
+  <label>Expected Coverage Amount</label>
+  <select>
+    <option>25 Lakhs</option>
+    <option>50 Lakhs</option>
+    <option>1 Crore</option>
+    <option>2 Crore+</option>
+  </select>
+
+  <label>Policy Term</label>
+  <select>
+    <option>10 Years</option>
+    <option>15 Years</option>
+    <option>20 Years</option>
+    <option>30 Years</option>
+  </select>
+
+  <!-- Nominee -->
+  <label>Nominee Name</label>
+  <input type="text" placeholder="Nominee full name">
+
+  <label>Nominee Relationship</label>
+  <select>
+    <option>Spouse</option>
+    <option>Father</option>
+    <option>Mother</option>
+    <option>Son</option>
+    <option>Daughter</option>
+  </select>
+
+  <button class="submit-btn">Request Callback</button>
+</div>
+<footer>
+    <p>© 2026 Jayam Associates | All Types of Insurance Consultancy</p>
+</footer><br>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Health Insurance Details | Jayam InsurEase</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+  {% include 'header.html' %}
+  <br>
+  <div class="health-form-container">
+    <h2 id="formTitle">Health Insurance Details</h2>
+
+    <form>
+      <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="customer_name" placeholder="Enter Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" name="customer_age" placeholder="Enter Age" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email ID</label>
+                    <input type="email" name="customer_email" placeholder="email@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" name="customer_mobile" placeholder="10 Digit Number" required>
+                </div>
+      <!-- Members -->
+      <label><b>Who would you like to insure?</b></label>
+      <div class="member-group">
+
+        <label class="member-item">
+          <input type="checkbox" name="member" value="self">
+          <span>Self</span>
+        </label>
+
+        <label class="member-item">
+          <input type="checkbox" name="member" value="spouse">
+          <span>Spouse</span>
+        </label>
+
+        <label class="member-item">
+          <input type="checkbox" name="member" value="son">
+          <span>Son</span>
+        </label>
+
+        <label class="member-item">
+          <input type="checkbox" name="member" value="daughter">
+          <span>Daughter</span>
+        </label>
+
+        <label class="member-item">
+          <input type="checkbox" name="member" value="father">
+          <span>Father</span>
+        </label>
+
+        <label class="member-item">
+          <input type="checkbox" name="member" value="mother">
+          <span>Mother</span>
+        </label>
+
+      </div>
+      <br>
+
+      <!-- Policy Type -->
+      <label>Policy Type</label>
+      <select>
+        <option>Select Policy Type</option>
+        <option>Individual</option>
+        <option>Family Floater</option>
+      </select>
+
+      <!-- Eldest Age -->
+      <label>Eldest Member Age</label>
+      <select>
+        <option>Select Age</option>
+        <option>18 - 25</option>
+        <option>26 - 35</option>
+        <option>36 - 45</option>
+        <option>46 - 55</option>
+        <option>56 - 65</option>
+        <option>66+</option>
+      </select>
+
+      <!-- Gender -->
+      <label>Eldest Member Gender</label>
+      <select>
+        <option>Select</option>
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+
+      <!-- Existing Policy -->
+      <label>Do you have existing health insurance?</label>
+      <select>
+        <option>No</option>
+        <option>Yes</option>
+      </select>
+
+      <!-- PED -->
+      <label>Any Pre-Existing Disease?</label>
+      <select>
+        <option>None</option>
+        <option>Diabetes</option>
+        <option>Blood Pressure</option>
+        <option>Heart Disease</option>
+        <option>Other</option>
+      </select>
+
+      <!-- Sum Insured -->
+      <label>Preferred Sum Insured</label>
+      <select>
+        <option>Select Amount</option>
+        <option>₹3 Lakhs</option>
+        <option>₹5 Lakhs</option>
+        <option>₹10 Lakhs</option>
+        <option>₹15 Lakhs</option>
+        <option>₹25 Lakhs</option>
+      </select>
+
+      <!-- Location -->
+      <label>City</label>
+      <input type="text" placeholder="Eg: Chennai">
+
+      <label>Pincode</label>
+      <input type="number" placeholder="Eg: 600028">
+
+      <!-- Contact -->
+      <label>Mobile Number</label>
+      <input type="tel" placeholder="10 digit mobile number">
+    </form>
+
+    <form action="{{ url_for('suggest_policy') }}" method="post">
+      <input type="hidden" name="type" value="Health">
+
+      <label>Age</label>
+      <input type="number" name="age" required>
+
+      <label>No of Members</label>
+      <input type="number" name="members" required>
+
+      <label>Sum Insured</label>
+      <select name="sum_insured">
+        <option value="300000">3 Lakhs</option>
+        <option value="500000">5 Lakhs</option>
+        <option value="1000000">10 Lakhs</option>
+      </select>
+
+      <label>Any Previous Claims?</label>
+      <select name="claims">
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+      </select>
+
+      <label>Annual Income (Lakhs)</label>
+      <input type="number" name="income" required placeholder="Eg. 10">
+
+      <label>Preferred Budget</label>
+      <select name="budget">
+        <option value="Economy">Economy</option>
+        <option value="Standard" selected>Standard</option>
+        <option value="Premium">Premium</option>
+      </select>
+
+      <button type="submit">View Health Insurance Plans</button>
+    </form>
+<div class="note">
+                * All information is kept confidential and secure.
+            </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get("type");
+
+    document.getElementById("policyType").value = type;
+
+    if (type === "family") {
+      document.getElementById("familyGroup").style.display = "block";
+      document.getElementById("formTitle").innerText = "Family Health Insurance Details";
+    } else {
+      document.getElementById("formTitle").innerText = "Individual Health Insurance Details";
+    }
+  </script>
+
+    {% include 'footer.html' %}
+</body>
+</html>

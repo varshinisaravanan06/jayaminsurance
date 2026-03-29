@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Successful - Jayam AI</title>
+    
+</head>
+
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <div class="icon">✅</div>
+        <h1>Thank You!</h1>
+        <p>Your interest has been successfully recorded.</p>
+        <p>We have sent the details to our Insurance Advisor.</p>
+        <p><strong>Our advisor will contact you shortly to finalize the policy and assist with the payment
+                process.</strong></p>
+
+        <a href="{{ url_for('home') }}" class="btn">Return to Home</a>
+    </div>
+    {% include 'footer.html' %}
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+<h2>Details Collected (Review)</h2>
+
+<p><b>Service:</b> {{ service_type }}</p>
+
+<ul>
+{% for key, value in data.items() %}
+    <li><b>{{ key }}:</b> {{ value }}</li>
+{% endfor %}
+</ul>
+
+<p>✅ Data collection working correctly</p>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Service Form</title>
+</head>
+<body>
+
+
+<div class="container">
+  <h2>Select Vehicle Type</h2>
+
+  <!-- Vehicle Type Cards -->
+  <div class="vehicle-cards">
+    <div class="vehicle-card active">Car</div>
+    <div class="vehicle-card">Bike</div>
+    <div class="vehicle-card">GCV</div>
+    <div class="vehicle-card">PCV</div>
+    <div class="vehicle-card">Misc</div>
+  </div>
+
+  <!-- Common Customer Name -->
+  <div class="form-group">
+    <label>Customer Name</label>
+    <input type="text" placeholder="Enter Full Name">
+  </div>
+
+  <!-- CAR FORM -->
+  <div class="vehicle-form show">
+    <h3>Car Details</h3>
+
+    <div class="two-col">
+      <div>
+        <label>Car Details</label>
+        <input type="text" placeholder="Make, Model, Fuel, Variant">
+      </div>
+      <div>
+        <label>Registration RTO</label>
+        <input type="text" placeholder="TN58 - Madurai South">
+      </div>
+    </div>
+
+    <label>Policy Type</label>
+    <div class="radio-group">
+      <label><input type="radio" name="car_policy"> TP Only</label>
+      <label><input type="radio" name="car_policy"> OD Only</label>
+      <label><input type="radio" name="car_policy" checked> Comprehensive</label>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <label>Registration Date</label>
+        <input type="date">
+      </div>
+      <div>
+        <label>Manufacturing Year</label>
+        <input type="month">
+      </div>
+    </div>
+  </div>
+
+  <!-- BIKE FORM -->
+  <div class="vehicle-form">
+    <h3>Bike Details</h3>
+
+    <div class="two-col">
+      <div>
+        <label>Bike Details</label>
+        <input type="text" placeholder="Make, Model, Fuel">
+      </div>
+      <div>
+        <label>Registration RTO</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <label>Policy Type</label>
+    <div class="radio-group">
+      <label><input type="radio" name="bike_policy"> TP Only</label>
+      <label><input type="radio" name="bike_policy"> OD Only</label>
+      <label><input type="radio" name="bike_policy" checked> Comprehensive</label>
+    </div>
+  </div>
+
+  <!-- GCV FORM -->
+  <div class="vehicle-form">
+    <h3>GCV Details</h3>
+    <input type="text" placeholder="Vehicle Category">
+    <input type="number" placeholder="Gross Vehicle Weight (KG)">
+    <input type="number" placeholder="Seating Capacity">
+  </div>
+
+  <!-- PCV FORM -->
+  <div class="vehicle-form">
+    <h3>PCV Details</h3>
+    <input type="text" placeholder="Vehicle Type">
+    <input type="number" placeholder="Passenger Capacity">
+    <input type="text" placeholder="Permit Type">
+  </div>
+
+  <!-- MISC FORM -->
+  <div class="vehicle-form">
+    <h3>Miscellaneous Vehicle Details</h3>
+    <input type="text" placeholder="Vehicle Description">
+    <input type="number" placeholder="IDV Amount">
+  </div>
+
+  <button class="btn">View Quote</button>
+</div>
+
+</body>
+</html>

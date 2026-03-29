@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Private Car Insurance | Jayam AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    {% include 'header.html' %}
+
+    <div class="form-container">
+        <h2>Four Wheeler Information</h2>
+
+            <form action="{{ url_for('suggest_policy') }}" method="POST">
+                <input type="hidden" name="type" value="Motor">
+                <input type="hidden" name="vehicle_type" value="Car">
+                <div class="form-grid">
+                <!-- Personal Details -->
+                <div class="section-title">Personal Details</div>
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" name="customer_name" placeholder="Enter Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" name="customer_age" placeholder="Enter Age" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email ID</label>
+                        <input type="email" name="customer_email" placeholder="email@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input type="tel" name="customer_mobile" placeholder="10 Digit Number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Annual Income (Lakhs)</label>
+                        <input type="number" name="income" placeholder="Eg. 10" min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred Budget</label>
+                        <select name="budget">
+                            <option value="Economy">Economy (Basic Cover)</option>
+                            <option value="Standard" selected>Standard (Balanced)</option>
+                            <option value="Premium">Premium (Max Cover)</option>
+                        </select>
+                    </div>
+
+                    <!-- Vehicle Details -->
+                    <div class="section-title"
+                        style="grid-column: span 2; font-size: 1.1em; color: #34495e; margin-top: 20px; text-align: left; padding: 0;">
+                        Vehicle Details</div>
+                    <div class="form-group">
+                        <label>Registration Number</label>
+                        <input type="text" name="reg_number" placeholder="TN-01-AB-1234" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Registration Year</label>
+                        <select name="vehicle_age">
+                            <option value="0">2025</option>
+                            <option value="1">2024</option>
+                            <option value="2">2023</option>
+                            <option value="3">2022</option>
+                            <option value="4">2021</option>
+                            <option value="5">2020</option>
+                            <option value="6">Older</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>RTO Location</label>
+                        <input type="text" name="rto" placeholder="Eg. Chennai South" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Manufacturer</label>
+                        <select name="make">
+                            <option>Maruti Suzuki</option>
+                            <option>Hyundai</option>
+                            <option>Tata</option>
+                            <option>Mahindra</option>
+                            <option>Toyota</option>
+                            <option>Kia</option>
+                            <option>Honda</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Model & Variant</label>
+                        <input type="text" name="model" placeholder="Eg. Swift VXI" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Fuel Type</label>
+                        <select name="fuel">
+                            <option>Petrol</option>
+                            <option>Diesel</option>
+                            <option>CNG</option>
+                            <option>Electric</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Previous Policy Expiry</label>
+                        <select name="prev_policy">
+                            <option>Not Expired</option>
+                            <option>Expired < 90 Days</option>
+                            <option>Expired > 90 Days</option>
+                            <option>No Previous Policy</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Claims Last Year?</label>
+                        <select name="claim">
+                            <option value="No">No (NCB Bonus Applied)</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit">Get Car Insurance Quotes</button>
+            </form>
+            <div class="note">
+                * All information is kept confidential and secure.
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+</body>
+
+</html>

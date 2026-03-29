@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Insurance Enquiry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Google Font (optional but nice) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+  <div class="navbar">
+    <div class="logo">JAYAM ASSOCIATES</div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="{{ url_for('services') }}">Services</a>
+      <a href="#">Partners</a>
+      <a href="{{ url_for('enquiry') }}">Get Quote</a>
+    </div>
+  </div>
+</header><br>
+<center>
+<h2>Recommended Health Policies</h2><br>
+<div class="result-wrapper">
+  {% for p in policies %}
+  <div class="policy-box">
+    <h3>{{ p.company }}</h3>
+    <p><b>Plan:</b> {{ p.plan }}</p>
+    <p><b>Cover:</b> ₹{{ p.cover }} Lakhs</p>
+    <p><b>Monthly Premium:</b> ₹{{ p.monthly_premium }}</p>
+
+    <form action="{{ url_for('policy_details') }}" method="GET">
+      <input type="hidden" name="company" value="{{ p.company }}">
+      <input type="hidden" name="plan" value="{{ p.plan }}">
+      <input type="hidden" name="premium" value="{{ p.monthly_premium }}">
+      <button type="submit">Select Policy</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% if session.selected_company %}
+<br>
+{% endif %}
+</center>
+<footer>
+    <p>© 2026 Jayam Associates | All Types of Insurance Consultancy</p>
+</footer>
+</body>
+</html>

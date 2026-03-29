@@ -1,0 +1,25 @@
+<h2>AI Recommended Policies</h2>
+
+<p><b>Customer Name:</b> {{ customer }}</p>
+<p><b>Insurance Type:</b> {{ insurance }}</p>
+
+<hr>
+
+{% for p in policies %}
+  <div class="policy-card">
+    <p><b>Company:</b> {{ p.company }}</p>
+    <p><b>Policy Name:</b> {{ p.policy }}</p>
+    <p><b>Policy Type:</b> {{ p.type }}</p>
+    <p><b>Premium:</b> {{ p.premium }}</p>
+
+    <form action="/confirm-policy" method="POST">
+      <input type="hidden" name="company" value="{{ p.company }}">
+      <input type="hidden" name="plan" value="{{ p.policy }}">
+      <input type="hidden" name="price" value="{{ p.premium }}">
+      <button type="submit">Select Policy</button>
+    </form>
+  </div>
+  <hr>
+{% endfor %}
+
+

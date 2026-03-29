@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification | Jayam InsurEase</title>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+
+<body>
+
+    <div class="login-container">
+        <!-- Floating Security Icon -->
+        <div
+            style="margin: 0 auto 20px; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(16, 185, 129, 0.1)); border-radius: 16px; display: flex; justify-content: center; align-items: center; border: 1px solid rgba(255,255,255,0.05);">
+            <i class="fas fa-lock" style="font-size: 1.8rem; color: #6366f1;"></i>
+        </div>
+
+        <h2>OTP Verification</h2>
+        <p>Enter the 6-digit code sent to your email.</p>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <p
+            style="color: #fca5a5; background: rgba(220,38,38,0.2); border: 1px solid rgba(220,38,38,0.3); padding: 12px; border-radius: 12px; font-weight: 500; margin-bottom: 20px;">
+            <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i> {{ messages[0] }}
+        </p>
+        {% endif %}
+        {% endwith %}
+
+        {% if error %}
+        <p
+            style="color: #fca5a5; background: rgba(220,38,38,0.2); border: 1px solid rgba(220,38,38,0.3); padding: 12px; border-radius: 12px; font-weight: 500; margin-bottom: 20px;">
+            <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i> {{ error }}
+        </p>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('verify_otp') }}">
+            <input type="hidden" name="email" value="{{ email }}">
+            <div style="position: relative;">
+                <i class="fas fa-key"
+                    style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #64748b;"></i>
+                <input type="text" name="otp" placeholder="Enter OTP" required
+                    style="padding-left: 45px; letter-spacing: 5px; font-weight: 600; text-align: center;">
+            </div>
+
+            <button type="submit" style="margin-top: 20px;">Verify Identity <i class="fas fa-arrow-right"
+                    style="margin-left: 8px; font-size: 0.9em;"></i></button>
+        </form>
+
+        <div class="footer-text">
+            Jayam InsurEase &copy; 2026
+            <br><br>
+            <a href="{{ url_for('login') }}"><i class="fas fa-arrow-left"
+                    style="margin-right: 5px; font-size: 0.8em;"></i> Back to Login</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

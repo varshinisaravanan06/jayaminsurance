@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate Insurance Details - Jayam Associates</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {% include 'header.html' %}
+    <br><br>
+    <div class="health-form-container" style="max-width: 900px; margin-top: 100px;">
+        <div class="content">
+            <center>
+            <h2>Corporate Insurance Details</h2>
+            </center>
+            <form action="{{ url_for('suggest_policy') }}" method="POST">
+                <input type="hidden" name="type" value="Corporate">
+                
+                <div class="form-grid">
+                <!-- Personal Details -->
+                <div class="section-title">Personal Details</div>
+
+                    <div class="form-group full-width">
+                        <label>Full Name</label>
+                        <input type="text" name="customer_name" placeholder="Enter Full Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email ID</label>
+                        <input type="email" name="customer_email" placeholder="email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" name="age" placeholder="e.g., 35" required min="18" max="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input type="tel" name="customer_mobile" placeholder="10 Digit Number" required>
+                    </div>
+                    
+                    <div class="section-title" style="grid-column: span 2; font-size: 1.1em; color: #34495e; margin-top: 20px; text-align: left; padding: 0;">
+                        Corporate Details</div>
+
+                    <div class="form-group full-width">
+                        <label>Company Name</label>
+                        <input type="text" name="company_name" placeholder="Enter company name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Number of Employees</label>
+                        <input type="number" name="employees" placeholder="e.g., 50" required min="1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Year Established</label>
+                        <input type="number" name="established" placeholder="e.g., 2010" min="1900" max="2026">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Industry Type</label>
+                        <select name="industry" required>
+                            <option value="">Select Industry</option>
+                            <option value="IT">IT / Software</option>
+                            <option value="Manufacturing">Manufacturing</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Education">Education</option>
+                            <option value="Retail">Retail</option>
+                            <option value="Construction">Construction</option>
+                            <option value="Banking">Banking / Finance</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Monthly Payroll (₹)</label>
+                        <input type="number" name="payroll" placeholder="e.g., 2500000" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Preferred Budget</label>
+                        <select name="budget" required>
+                            <option value="">Select Budget</option>
+                            <option value="Economy">Economy (Basic)</option>
+                            <option value="Standard" selected>Standard (Comprehensive)</option>
+                            <option value="Premium">Premium (Executive)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Current Insurer (Optional)</label>
+                        <input type="text" name="current_insurer" placeholder="If any">
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Coverage Required</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="coverage" id="group_health" value="Group Health">
+                                <label for="group_health">Group Health Insurance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="coverage" id="group_term" value="Group Term Life">
+                                <label for="group_term">Group Term Life</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="coverage" id="personal_accident" value="Personal Accident">
+                                <label for="personal_accident">Personal Accident</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="coverage" id="workmen" value="Workmen Compensation">
+                                <label for="workmen">Workmen Compensation</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="coverage" id="travel" value="Travel">
+                                <label for="travel">Travel Insurance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="coverage" id="cyber" value="Cyber Liability">
+                                <label for="cyber">Cyber Liability</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Special Requirements</label>
+                        <textarea name="special_requirements" rows="3" placeholder="Any specific requirements or notes..."></textarea>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-submit">GET CORPORATE QUOTES</button>
+            </form>
+            <div class="note">
+                * All information is kept confidential and secure.
+            </div>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+</body>
+</html>

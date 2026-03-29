@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommended Policy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+{% for item in policies %}
+<div class="card">
+    <h3>{{ item.policy.company }}</h3>
+    <p><b>{{ item.policy.plan }}</b></p>
+    <p>Life cover: ₹{{ item.policy.cover }} L</p>
+    <p>Cover till: {{ item.policy.max_age }} yrs</p>
+    <p>Claim settled: {{ item.policy.claim_ratio }}%</p>
+    <p>Add-ons: {{ item.policy.addons }}</p>
+    <h2>₹{{ item.policy.monthly_premium }}/month</h2>
+
+    {% if loop.index == 1 %}
+        <span style="color:green;font-weight:bold;">⭐ BEST MATCH</span>
+    {% endif %}
+
+    <!-- ✅ SELECT BUTTON -->
+    <form method="POST" action="/select-policy">
+        <input type="hidden" name="company" value="{{ item.policy.company }}">
+        <input type="hidden" name="plan" value="{{ item.policy.plan }}">
+        <input type="hidden" name="premium" value="{{ item.policy.monthly_premium }}">
+        <button type="submit">Select Policy</button>
+    </form>
+</div>
+{% endfor %}
+
+<footer>
+    © 2026 Jayam Associates | All Types of Insurance Consultancy
+</footer>
+
+</body>
+</html>

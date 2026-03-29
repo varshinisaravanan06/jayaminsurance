@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommended Motor Policies</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<h2 class="page-title">🚗 Recommended Motor Policies</h2>
+
+<div class="policy-container">
+    {% for policy in policies %}
+    <div class="policy-card">
+        <h3>{{ policy.name }}</h3>
+        <p><b>Price:</b> {{ policy.price }}</p>
+        <p><b>Features:</b> {{ policy.features }}</p>
+
+        <form action="{{ url_for('confirm_policy') }}" method="post">
+            <input type="hidden" name="policy_name" value="{{ policy.name }}">
+            <input type="hidden" name="price" value="{{ policy.price }}">
+            <button class="select-btn">Select Policy</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+<footer>
+    <p>© 2026 Jayam Associates | All Types of Insurance Consultancy</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Jayam Associates</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to right, #0f1635, #1c2354);
+            min-height: 100vh;
+            padding: 100px 20px 40px 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .header-title h1 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .header-title p {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .admin-badge {
+            background: linear-gradient(to right, #0f1635, #1c2354);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .stat-info h3 {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-info p {
+            color: #333;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+        
+        .tables-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .table-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .table-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .table-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            margin: 0;
+        }
+        
+        .table-container {
+            padding: 20px;
+            overflow-x: auto;
+            background-color: #ffffff;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: transparent;
+        }
+        
+        th {
+            text-align: left;
+            padding: 12px 10px;
+            background: #f8f9fa;
+            color: #333 !important;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+            color: #444 !important;
+            font-size: 0.95rem;
+            font-weight: 500;
+            background-color: #ffffff;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover td {
+            background-color: #f8f9fa;
+        }
+        
+        .send-mail-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white !important;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+        .send-mail-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+        }
+        
+        .badge {
+            background: #28a745;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .activity-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 25px;
+        }
+        
+        .activity-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .activity-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .activity-container {
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+        
+        .activity-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .activity-details {
+            flex: 1;
+        }
+        
+        .activity-user {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        
+        .activity-page {
+            color: #667eea;
+            font-size: 0.9rem;
+            margin-bottom: 3px;
+        }
+        
+        .activity-time {
+            color: #999;
+            font-size: 0.8rem;
+        }
+        
+        .view-all-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px;
+            width: calc(100% - 40px);
+        }
+        
+        .view-all-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 80px 15px 30px 15px;
+            }
+            
+            .tables-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .stat-card {
+                padding: 20px;
+            }
+            
+            .stat-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            
+            .stat-info p {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <br><br>
+    <div class="container">
+        <div class="header-card">
+            <div class="header-title">
+                <h1>Admin Dashboard</h1>
+                <p>Welcome back, Admin! Here's what's happening with your platform.</p>
+            </div>
+            <div style="display: flex; gap: 15px;">
+                <span class="admin-badge">👑 Admin</span>
+                <!-- FIXED: Using admin_panel_logout -->
+                <a href="{{ url_for('admin_panel_logout') }}" class="logout-btn">🚪 Logout</a>
+            </div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                    <h3>Total Users</h3>
+                    <p>{{ total_users }}</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">📋</div>
+                <div class="stat-info">
+                    <h3>Total Enquiries</h3>
+                    <p>{{ total_enquiries }}</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">💬</div>
+                <div class="stat-info">
+                    <h3>Active Sessions</h3>
+                    <p>24</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-info">
+                    <h3>Today's Activity</h3>
+                    <p>{{ activities|length }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tables-grid">
+            <div class="table-card">
+                <div class="table-header">
+                    <span>👥</span>
+                    <h3>Recent Users</h3>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Joined (IST)</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if users %}
+                                {% for user in users %}
+                                <tr>
+                                    <td>{{ user[0] }}</td>
+                                    <td>{{ user[1] }}</td>
+                                    <td style="color: #666; font-size: 0.85rem;">{{ user[2] }}</td>
+                                    <td>
+                                        <a href="{{ url_for('admin_send_welcome', email=user[1]) }}" class="send-mail-btn" title="Send Welcome Email">
+                                            <i class="fas fa-paper-plane"></i> Send Welcome Mail
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="4" class="empty-state">No users yet</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="table-card">
+                <div class="table-header">
+                    <span>📋</span>
+                    <h3>Recent Enquiries</h3>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Type</th>
+                                <th>Recommendation</th>
+                                <th>Date (IST)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if enquiries %}
+                                {% for enquiry in enquiries %}
+                                <tr>
+                                    <td>{{ enquiry[0] }}</td>
+                                    <td><span class="badge">{{ enquiry[1] }}</span></td>
+                                    <td>{{ enquiry[2] }}</td>
+                                    <td style="color: #666; font-size: 0.85rem;">{{ enquiry[3] }}</td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="4" class="empty-state">No enquiries yet</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="activity-card">
+            <div class="activity-header">
+                <span>📊</span>
+                <h3>Recent Activity Log</h3>
+            </div>
+            <div class="activity-container">
+                {% if activities %}
+                    {% for activity in activities %}
+                    <div class="activity-item">
+                        <div class="activity-icon">👤</div>
+                        <div class="activity-details">
+                            <div class="activity-user">{{ activity[0] }}</div>
+                            <div class="activity-page">Page: {{ activity[1] }}</div>
+                            <div class="activity-time" style="color: #666; font-size: 0.8rem; font-weight: 500;">{{ activity[2] }} (IST)</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">No activity yet</div>
+                {% endif %}
+            </div>
+            <button class="view-all-btn" onclick="window.location.href='#'">View All Activity →</button>
+        </div>
+    </div>
+    
+    {% include 'footer.html' %}
+</body>
+</html>

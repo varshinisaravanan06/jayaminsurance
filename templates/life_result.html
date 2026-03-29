@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Recommended Life Policies</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+  <div class="navbar">
+    <div class="logo">JAYAM ASSOCIATES</div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="{{ url_for('services') }}">Services</a>
+      <a href="#">Partners</a>
+      <a href="{{ url_for('enquiry') }}">Get Quote</a>
+    </div>
+  </div>
+</header>
+<br>
+<center><br>
+<h2 class="page-title">✅ Recommended Life Insurance Policies</h2>
+
+<div class="policy-wrapper">
+
+    {% for p in policies %}
+    <form action="{{ url_for('policy_details') }}" method="GET" class="policy-box">
+
+        <p><b>Company:</b> {{ p.company }}</p>
+        <p><b>Plan:</b> {{ p.plan }}</p>
+        <p><b>Max Age:</b> {{ p.max_age }}</p>
+
+        <input type="hidden" name="company" value="{{ p.company }}">
+        <input type="hidden" name="plan" value="{{ p.plan }}">
+
+        <button type="submit" class="select-btn">
+            Select Policy
+        </button>
+
+    </form>
+    {% endfor %}
+
+</div>
+{% if session.selected_company %}
+<br>
+{% endif %}
+
+</center>
+<footer>
+    <p>© 2026 Jayam Associates | All Types of Insurance Consultancy</p>
+</footer>
+<br>
+</body>
+</html>

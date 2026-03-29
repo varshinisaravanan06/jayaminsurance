@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Motor Insurance – Policy Details</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+{% if vehicle == "Two Wheeler" %}
+<h3>Bike Details</h3>
+<input type="text" name="bike_model" placeholder="Bike Model">
+<input type="date" name="reg_date">
+
+{% elif vehicle == "Private Car" %}
+<h3>Car Details</h3>
+<input type="text" name="car_model" placeholder="Car Model">
+<select name="fuel">
+  <option>Petrol</option>
+  <option>Diesel</option>
+</select>
+
+{% else %}
+<h3>Commercial Vehicle Details</h3>
+<input type="text" name="vehicle_model" placeholder="Vehicle Model">
+<input type="text" name="permit" placeholder="Permit Type">
+<input type="text" name="gvw" placeholder="GVW">
+{% endif %}
+
+<button type="submit">View Policies</button>
+
+</body>
+</html>

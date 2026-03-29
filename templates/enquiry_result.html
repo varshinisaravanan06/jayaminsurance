@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enquiry Submitted</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Thank You!</h2>
+        <p>Your enquiry has been submitted successfully.</p>
+
+        <p><strong>Name:</strong> {{ name }}</p>
+        <p><strong>Email:</strong> {{ email }}</p>
+        <p><strong>Service:</strong> {{ service }}</p>
+
+        <a href="{{ url_for('home') }}">Back to Home</a>
+        <form action="{{ url_for('enquiry') }}" method="POST">
+
+    <label>Name</label>
+    <input type="text" name="name" required>
+
+    <label>Email</label>
+    <input type="email" name="email" required>
+
+    <label>Service</label>
+    <select name="service" required>
+        <option value="Motor Insurance">Motor Insurance</option>
+        <option value="Health Insurance">Health Insurance</option>
+        <option value="Life Insurance">Life Insurance</option>
+        <option value="Corporate Insurance">Corporate Insurance</option>
+    </select>
+
+    <button type="submit">Submit Enquiry</button>
+
+</form>
+
+    </div>
+
+</body>
+</html>

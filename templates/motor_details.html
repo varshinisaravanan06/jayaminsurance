@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Motor Insurance Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f4f7f6;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            background: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #d35400;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2 style="text-align: center;">Motor Insurance Input</h2>
+
+    <form action="{{ url_for('suggest_policy') }}" method="POST">
+        <input type="hidden" name="type" value="Motor">
+
+        <label>Vehicle Type</label>
+        <select name="vehicle_type">
+            <option value="Car">Car</option>
+            <option value="Bike">Bike</option>
+        </select>
+
+        <label>Vehicle Age (Years)</label>
+        <input type="number" name="vehicle_age" required placeholder="e.g. 4">
+
+        <label>Registration Number</label>
+        <input type="text" name="reg_number" placeholder="TN01AB1234">
+
+        <label>Previous Claim?</label>
+        <select name="claim">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+        </select>
+
+        <button type="submit">Get Suggestions</button>
+    </form>
+
+    <a href="{{ url_for('home') }}" class="back-link">Back to Home</a>
+
+</body>
+
+</html>

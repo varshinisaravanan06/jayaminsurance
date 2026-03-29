@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motor Insurance Types | Jayam Associates</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            background: linear-gradient(to right, #0f1635, #1c2354);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+        }
+        .page-container {
+            max-width: 1200px;
+            margin: 140px auto 80px;
+            padding: 20px;
+        }
+        .motor-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        /* Beautiful Glass CSS directly inline */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .glass-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(99, 102, 241, 0.6);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3), 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+        .glass-card i {
+            font-size: 3.5rem; 
+            color: #818cf8; 
+            margin-bottom: 1.2rem;
+            transition: transform 0.3s;
+        }
+        .glass-card:hover i {
+            transform: scale(1.1);
+            color: #a5b4fc;
+        }
+        .glass-card h3 {
+            font-size: 1.3rem;
+            color: #fff;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    
+    <div class="page-container">
+        <center>
+            <h2 style="font-size: 2.2rem; margin-bottom: 10px;">Motor <span style="background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Insurance Types</span></h2>
+            <p style="color: #94a3b8; font-size: 1.1rem; max-width: 600px;">Select your vehicle category to compare and find the best comprehensive or third-party insurance policies instantly.</p>
+        </center>
+        
+        <div class="motor-cards">
+            <div class="glass-card" onclick="window.location.href='{{ url_for('bike_form') }}'">
+                <i class="fas fa-motorcycle"></i>
+                <h3>Two Wheeler</h3>
+            </div>
+            <div class="glass-card" onclick="window.location.href='{{ url_for('car_form') }}'">
+                <i class="fas fa-car"></i>
+                <h3>Private Car</h3>
+            </div>
+            <div class="glass-card" onclick="window.location.href='{{ url_for('pcv_form') }}'">
+                <i class="fas fa-bus"></i>
+                <h3>Passenger Carrying (PCV)</h3>
+            </div>
+            <div class="glass-card" onclick="window.location.href='{{ url_for('enquiry') }}'">
+                <i class="fas fa-taxi"></i>
+                <h3>Commercial Auto</h3>
+            </div>
+            <div class="glass-card" onclick="window.location.href='{{ url_for('gcv_form') }}'">
+                <i class="fas fa-truck"></i>
+                <h3>Goods Carrying (GCV)</h3>
+            </div>
+            <div class="glass-card" onclick="window.location.href='{{ url_for('misc_form') }}'">
+                <i class="fas fa-tractor"></i>
+                <h3>Miscellaneous Vehicles</h3>
+            </div>
+        </div>
+    </div>
+    
+    {% include 'footer.html' %}
+</body>
+</html>

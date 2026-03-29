@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+     <title>Apply – {{ service_type|title }} Insurance</title>
+     <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Google Font (optional but nice) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+  <div class="navbar">
+    <div class="logo">JAYAM ASSOCIATES</div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="{{ url_for('services') }}">Services</a>
+      <a href="#">Partners</a>
+      <a href="{{ url_for('enquiry') }}">Get Quote</a>
+    </div>
+  </div>
+</header>
+<center>
+<h2>{{ service_type|title }} Insurance – Customer Details</h2>
+</center>
+<form method="POST">
+    <h3>Personal Details</h3>
+    <input type="text" name="name" placeholder="Full Name" required><br><br>
+    <input type="number" name="age" placeholder="Age" required><br><br>
+    <input type="text" name="mobile" placeholder="Mobile Number" required><br><br>
+    <input type="email" name="email" placeholder="Email ID" required><br><br>
+
+    {% if service_type == "motor" %}
+    <h3>Vehicle Details</h3>
+    <input type="text" name="vehicle_number" placeholder="Vehicle Registration No" required><br><br>
+
+    <select name="vehicle" required>
+        <option value="">Select Vehicle Type</option>
+        <option value="car">Car</option>
+        <option value="bike">Bike</option>
+    </select><br><br>
+
+    <input type="number" name="vehicle_year" placeholder="Manufacturing Year" required><br><br>
+
+    <select name="fuel" required>
+        <option value="">Fuel Type</option>
+        <option>Petrol</option>
+        <option>Diesel</option>
+        <option>Electric</option>
+        <option>CNG</option>
+    </select><br><br>
+
+    <select name="budget" required>
+        <option value="1">Low</option>
+        <option value="2">Medium</option>
+        <option value="3">High</option>
+    </select><br><br>
+    {% endif %}
+
+    {% if service_type == "life" %}
+    <h3>Life Insurance Details</h3>
+    <input type="number" name="income" placeholder="Annual Income (Lakhs)" required><br><br>
+    <input type="number" name="cover" placeholder="Required Cover (Lakhs)" required><br><br>
+    <input type="number" name="budget" placeholder="Monthly Budget" required><br><br>
+    {% endif %}
+
+    <!-- =====================
+         HEALTH INSURANCE
+    ====================== -->
+    {% if service_type == "health" %}
+    <h3>Health Insurance Details</h3>
+
+    <select name="members" required>
+        <option value="">Number of Members</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4+</option>
+    </select><br><br>
+
+    <select name="pre_existing" required>
+        <option value="">Pre-existing Disease?</option>
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+    </select><br><br>
+
+     <select name="cover" required>
+        <option value="">Required Cover</option>
+        <option value="5">5 Lakhs</option>
+        <option value="10">10 Lakhs</option>
+        <option value="25">25 Lakhs</option>
+    </select><br><br>
+
+    <select name="budget" required>
+        <option value="">Monthly Budget</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+    </select><br><br>
+    {% endif %}
+    <!-- =====================
+         CORPORATE / OTHER
+    ====================== -->
+    {% if service_type == "corporate" %}
+    <h3>Corporate Insurance Details</h3>
+    <input type="text" name="company_name" placeholder="Company Name" required><br><br>
+
+    <select name="employees" required>
+        <option value="">Number of Employees</option>
+        <option>1–10</option>
+        <option>11–50</option>
+        <option>51–200</option>
+        <option>200+</option>
+    </select><br><br>
+
+    <select name="policy_type" required>
+        <option value="">Policy Type</option>
+        <option>Group Health</option>
+        <option>Workmen Compensation</option>
+        <option>Fire & Property</option>
+        <option>Marine</option>
+    </select><br><br>
+    {% endif %}
+
+    <button type="submit">Get Best Policies</button>
+</form>
+<br>
+<footer>
+    <p>© 2026 Jayam Associates | All Types of Insurance Consultancy</p>
+</footer>
+<br>
+</body>
+</html>

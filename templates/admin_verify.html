@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Your existing styles */
+    </style>
+</head>
+<body>
+    <div class="verify-card">
+        <div class="verify-header">
+            <h2>🔐 Verify OTP</h2>
+            <p>Enter the 6-digit code sent to your email</p>
+        </div>
+        
+        <div class="verify-body">
+            {% if error %}
+            <div class="error-message">{{ error }}</div>
+            {% endif %}
+            
+            {% if warning %}
+            <div class="warning-message">{{ warning }}</div>
+            {% endif %}
+            
+            <form method="POST" action="/admin/verify-otp">
+                <div class="form-group">
+                    <label>Enter OTP</label>
+                    <input type="text" name="otp" placeholder="123456" maxlength="6" required>
+                </div>
+                
+                <button type="submit" class="btn-verify">Verify & Login</button>
+            </form>
+            
+            <div class="back-link">
+                <a href="/admin">← Back to Login</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

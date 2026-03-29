@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Goods Vehicle Insurance | Jayam AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+</head>
+
+<body>
+    {% include 'header.html' %}
+
+    <div class="form-container">
+        <h2>Goods Carrying Vehicle (GCV)</h2>
+
+        <form action="{{ url_for('suggest_policy') }}" method="POST">
+            <input type="hidden" name="type" value="Motor">
+            <input type="hidden" name="vehicle_type" value="GCV">
+
+            <div class="form-grid">
+                <!-- Personal Details -->
+                <div class="section-title">Personal Details</div>
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="customer_name" placeholder="Enter Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" name="customer_age" placeholder="Enter Age" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email ID</label>
+                    <input type="email" name="customer_email" placeholder="email@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" name="customer_mobile" placeholder="10 Digit Number" required>
+                </div>
+
+                <!-- Financial Profile (For AI) -->
+                <div class="section-title">Financial Details</div>
+
+                <div class="form-group">
+                    <label>Annual Income (Lakhs)</label>
+                    <input type="number" name="income" placeholder="Eg. 8" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Preferred Budget</label>
+                    <select name="budget">
+                        <option value="Economy">Economy (Third Party)</option>
+                        <option value="Standard" selected>Standard (Comprehensive)</option>
+                        <option value="Premium">Premium (Add-ons)</option>
+                    </select>
+                </div>
+
+                <!-- Vehicle Details -->
+                <div class="section-title">Vehicle Details</div>
+                <div class="form-group full-width">
+                    <label>Vehicle Category</label>
+                    <select name="category">
+                        <option>Public Carrier</option>
+                        <option>Private Carrier</option>
+                        <option>3 Wheeler GCV</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Registration Number</label>
+                    <input type="text" name="reg_number" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Gross Vehicle Weight (GVW in KG)</label>
+                    <input type="number" name="gvw" placeholder="Eg. 7500" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Make & Model</label>
+                    <input type="text" name="model" placeholder="Eg. Ashok Leyland Dost" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Registration Year</label>
+                    <input type="number" name="vehicle_age" placeholder="YYYY" required>
+                </div>
+
+                </div>
+                
+                <button type="submit">Get GCV Quotes</button>
+            </form>
+            <div class="note">
+                * All information is kept confidential and secure.
+            </div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+
+</html>

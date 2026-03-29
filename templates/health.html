@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Insurance | Jayam InsurEase</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<header>
+  <div class="navbar">
+    <div class="logo">JAYAM ASSOCIATES</div>
+    <div class="nav-links">
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('services') }}">Services</a>
+      <a href="{{ url_for('partners') }}">Partners</a>
+    </div>
+  </div>
+</header>
+
+<h2 style="text-align:center;margin-top:40px;">Select Health Insurance Type</h2>
+
+<div class="health-container">
+
+    <!-- Individual -->
+    <div class="health-card" onclick="goNext('individual')">
+        <img src="{{ url_for('static', filename='images/individual.png') }}">
+        <h3>Individual Health</h3>
+        <p>Cover for a single person</p>
+    </div>
+
+    <!-- Family Floater -->
+    <div class="health-card" onclick="goNext('family')">
+        <img src="{{ url_for('static', filename='images/family.png') }}">
+        <h3>Family Floater</h3>
+        <p>One policy for entire family</p>
+    </div>
+
+</div>
+
+<script>
+function goNext(type){
+    window.location.href = "/health-details?type=" + type;
+}
+</script>
+
+<footer>
+    <p>© 2026 Jayam Associates | Health Insurance Consultancy</p>
+</footer>
+
+</body>
+</html>

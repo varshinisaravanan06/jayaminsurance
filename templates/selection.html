@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Policy - Jayam Insurance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #0f1635, #1c2354);
+            color: #fff;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .suggestion-container {
+            max-width: 1000px;
+            margin: 150px auto 80px;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .suggestion-container h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: #fff;
+            border: none;
+            padding: 0;
+        }
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .policy-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            width: 320px;
+            text-align: left;
+            position: relative;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .policy-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(102, 126, 234, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .company-name {
+            font-size: 1.5rem;
+            color: #a3bffa;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .policy-detail {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: #ccc;
+            line-height: 1.4;
+        }
+        .policy-detail strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .premium-amount {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin-top: auto;
+            margin-bottom: 25px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+        }
+        .btn-select {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-select:hover {
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        .ai-badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-block;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    
+    <div class="suggestion-container">
+        <h2>Recommended {{ type }} Insurance Policies</h2>
+        <p style="color: #aaa; font-size: 1.1rem;">Based on your details, here are the best plans for you.</p>
+
+        <div class="cards">
+            {% for policy in policies %}
+            <div class="policy-card">
+                {% if policy.is_ai_recommended %}
+                <div>
+                    <span class="ai-badge"><i class="fas fa-star" style="margin-right: 5px;"></i> Best Policy Suggestion</span>
+                </div>
+                {% endif %}
+                
+                <div class="company-name">{{ policy.company }}</div>
+                
+                <div style="flex-grow: 1;">
+                    <div class="policy-detail"><strong>Plan</strong> {{ policy.policy }}</div>
+                    <div class="policy-detail"><strong>Cover</strong> {{ policy.cover }}</div>
+                    <div class="policy-detail"><strong>Features</strong> {{ policy.features }}</div>
+                </div>
+                
+                <div class="premium-amount">{{ policy.premium }}</div>
+
+                <form action="{{ url_for('select_policy') }}" method="POST">
+                    <input type="hidden" name="company" value="{{ policy.company }}">
+                    <input type="hidden" name="policy" value="{{ policy.policy }}">
+                    <input type="hidden" name="cover" value="{{ policy.cover }}">
+                    <input type="hidden" name="premium" value="{{ policy.premium }}">
+                    <button type="submit" class="btn-select">Select This Policy</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if not policies %}
+        <div style="margin-top: 40px; color: #ccc;">
+            <p>No specific recommendations found for these criteria. Please try adjusting your details.</p>
+            <a href="{{ url_for('home') }}" class="btn-select" style="display: inline-block; width: auto; padding: 10px 30px; margin-top: 20px; text-decoration: none;">Go Back</a>
+        </div>
+        {% endif %}
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

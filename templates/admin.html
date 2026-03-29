@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>📊 Selected Policies (Company / Admin View)</h1>
+
+        {% if policies %}
+            <table border="1" cellpadding="10" cellspacing="0" width="100%">
+                <tr>
+                    <th>Company</th>
+                    <th>Plan</th>
+                    <th>Monthly Premium</th>
+                </tr>
+
+                {% for p in policies %}
+                <tr>
+                    <td>{{ p.company }}</td>
+                    <td>{{ p.plan }}</td>
+                    <td>₹{{ p.premium }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No policy selections yet.</p>
+        {% endif %}
+
+        <br>
+        <a href="/" class="btn">Back to Home</a>
+    </div>
+
+</body>
+</html>

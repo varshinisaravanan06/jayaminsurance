@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Corporate Insurance</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+  <div class="navbar">
+    <div class="logo">JAYAM ASSOCIATES</div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="{{ url_for('services') }}">Services</a>
+      <a href="{{ url_for('partners') }}">Partners</a>
+      <a href="{{ url_for('enquiry') }}">Get Quote</a>
+    </div>
+  </div>
+</header><br>
+<h2>Corporate Insurance – Company Details</h2>
+
+<form>
+  <h3>Employee Demographics</h3>
+
+<label>Male Employees</label>
+<input type="number">
+
+<label>Female Employees</label>
+<input type="number">
+
+<label>Average Employee Age</label>
+<select>
+  <option>Below 25</option>
+  <option>25 – 35</option>
+  <option>36 – 45</option>
+  <option>Above 45</option>
+</select>
+<h3>Coverage Preferences</h3>
+
+<label>Sum Insured Per Employee</label>
+<select>
+  <option>₹2 Lakhs</option>
+  <option>₹3 Lakhs</option>
+  <option>₹5 Lakhs</option>
+  <option>₹10 Lakhs</option>
+</select>
+
+<label>Include Family Coverage?</label>
+<select>
+  <option>No</option>
+  <option>Employee + Spouse</option>
+  <option>Employee + Family</option>
+</select>
+<h3>Previous Policy Details</h3>
+
+<label>Existing Corporate Policy?</label>
+<select>
+  <option>No</option>
+  <option>Yes</option>
+</select>
+
+<label>Previous Insurer</label>
+<input type="text" placeholder="HDFC / ICICI / Star Health">
+
+<label>Claims in Last Policy?</label>
+<select>
+  <option>No</option>
+  <option>Yes</option>
+</select>
+
+<label>Total Claim Amount (if any)</label>
+<input type="text" placeholder="₹ Amount">
+<h3>Optional Add-ons</h3>
+
+<label><input type="checkbox"> Maternity Coverage</label><br>
+<label><input type="checkbox"> OPD Coverage</label><br>
+<label><input type="checkbox"> Day Care Procedures</label><br>
+<label><input type="checkbox"> Pre & Post Hospitalization</label><br>
+<label><input type="checkbox"> Room Rent Waiver</label>
+<h3>Decision Details</h3>
+
+<label>Expected Budget Per Employee</label>
+<input type="text" placeholder="₹ per employee">
+
+<label>Policy Purchase Timeline</label>
+<select>
+  <option>Immediately</option>
+  <option>Within 15 days</option>
+  <option>Within 1 Month</option>
+</select>
+
+  <button type="submit">Submit Requirement</button>
+
+</form><br>
+<footer>
+    <p>© 2026 Jayam Associates | All Types of Insurance Consultancy</p>
+</footer><br>
+</body>
+</html>

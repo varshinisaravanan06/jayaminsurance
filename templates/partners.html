@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Partners</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="form-section" style="padding-top: 150px; min-height: 80vh; flex-direction: column;">
+        <div class="container" style="text-align: center;">
+            <h1 class="text-gradient" style="font-size: 2.5rem; margin-bottom: 20px;">Our Trusted Insurance Partners</h1>
+            <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 50px;">We collaborate with India’s leading insurance providers to get you the best coverage.</p>
+
+            <div class="partners-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
+                {% for p in partners %}
+                <div class="partner-card" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); padding: 30px; border-radius: var(--radius-lg); backdrop-filter: blur(10px); width: 250px; transition: transform var(--transition-snappy);">
+                    <div style="background: white; padding: 10px; border-radius: 10px; margin-bottom: 15px; height: 100px; display: flex; align-items: center; justify-content: center;">
+                        <img src="{{ url_for('static', filename='images/partners/' + p.logo) }}" alt="{{ p.name }}" style="max-height: 80px; max-width: 100%;">
+                    </div>
+                    <h3 style="color: var(--pearl); font-family: 'Outfit', sans-serif;">{{ p.name }}</h3>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

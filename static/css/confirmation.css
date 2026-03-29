@@ -1,0 +1,135 @@
+header {
+  background: linear-gradient(90deg, #0b3c5d, #1e4ed8);
+  padding: 18px 60px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  margin-left: 28px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+.form-container {
+    max-width: 720px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-header h2 {
+    color: #2e7d32;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+}
+
+.form-header p {
+    color: #666;
+    font-size: 14px;
+}
+
+.section-title {
+    font-size: 18px;
+    color: #2e7d32;
+    margin: 30px 0 15px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 6px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    font-size: 14px;
+}
+
+input[readonly] {
+    background: #f1f1f1;
+    color: #555;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 6px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn-download {
+    background-color: #1976d2;
+    color: #ffffff;
+}
+
+.btn-download:hover {
+    background-color: #125aa0;
+}
+
+.btn-mail {
+    background-color: #2e7d32;
+    color: #ffffff;
+}
+
+.btn-mail:hover {
+    background-color: #1b5e20;
+}
+
+footer {
+  background-color: #0b3c5d;
+  color: #ffffff;
+  text-align: center;
+  padding: 18px;
+  font-size: 14px;
+  margin-top: 80px;
+}

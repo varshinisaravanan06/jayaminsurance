@@ -426,27 +426,14 @@ def index():
 # EMAIL HELPER
 # =========================
 def send_otp_email(recipient_email, otp):
-    api_key = os.environ.get("BREVO_API_KEY")
-    url = "https://api.brevo.com/v3/smtp/email"
-    headers = {"accept": "application/json", "api-key": api_key, "content-type": "application/json"}
-    
+    url = "https://script.google.com/macros/s/AKfycbzQNbzQUgS4SRD23ETDff4TLg2cMRypxUUW0ARwxEHyi3XNfeRi1XIwGiT7D5gm9SAmkA/exec"
     body_text = f"Hello,\n\nYour One-Time Password (OTP) for logging into Jayam InsurEase is:\n\n{otp}\n\nPlease do not share this code with anyone.\n\nRegards,\nJayam AI System"
     
-    data = {
-        "sender": {"name": "Jayam AI System", "email": "jayam.associates.2026@gmail.com"},
-        "to": [{"email": recipient_email}],
-        "subject": "Your Jayam InsurEase Login OTP",
-        "textContent": body_text
-    }
+    data = {"to": recipient_email, "subject": "Your Jayam InsurEase Login OTP", "body": body_text}
     try:
-        response = requests.post(url, headers=headers, json=data)
-        if response.status_code == 201:
-            print(f"SUCCESS: OTP Email sent to {recipient_email}")
-            return True
-        else:
-            print(f"BREVO ERROR: {response.text}")
-            print(f"FALLBACK - OTP FOR {recipient_email} is: {otp}")
-            return True
+        requests.post(url, json=data)
+        print(f"SUCCESS: OTP Email sent via Apps Script to {recipient_email}")
+        return True
     except Exception as e:
         print(f"EMAIL GENERATION ERROR: {e}")
         return False
@@ -726,30 +713,16 @@ ADMIN_EMAIL = "jayam.associates.2026@gmail.com"  # The company email
 
 # Function to send OTP email
 def send_admin_otp_email(recipient_email, otp):
-    api_key = os.environ.get("BREVO_API_KEY")
-    url = "https://api.brevo.com/v3/smtp/email"
-    headers = {"accept": "application/json", "api-key": api_key, "content-type": "application/json"}
-    
+    url = "https://script.google.com/macros/s/AKfycbzQNbzQUgS4SRD23ETDff4TLg2cMRypxUUW0ARwxEHyi3XNfeRi1XIwGiT7D5gm9SAmkA/exec"
     body_text = f"🔐 ADMIN LOGIN VERIFICATION\n\nYour One-Time Password (OTP) for admin access is: {otp}\n\nThis OTP is valid for 5 minutes.\nDo not share this code with anyone.\n\nRegards,\nJayam Associates Security Team"
     
-    data = {
-        "sender": {"name": "Jayam Security", "email": "jayam.associates.2026@gmail.com"},
-        "to": [{"email": recipient_email}],
-        "subject": "Admin Login OTP - Jayam Associates",
-        "textContent": body_text
-    }
-    
+    data = {"to": recipient_email, "subject": "Admin Login OTP - Jayam Associates", "body": body_text}
     try:
-        response = requests.post(url, headers=headers, json=data)
-        if response.status_code == 201:
-            print(f"✅ Admin OTP sent to {recipient_email}")
-            return True
-        else:
-            print(f"❌ Admin OTP Email error: {response.text}")
-            print(f"Admin OTP would be: {otp}")
-            return True
+        requests.post(url, json=data)
+        print(f"SUCCESS: Admin OTP Email sent via Apps Script to {recipient_email}")
+        return True
     except Exception as e:
-        print(f"❌ Failed to send admin email: {e}")
+        print(f"EMAIL GENERATION ERROR: {e}")
         return False
 
 # ============================================

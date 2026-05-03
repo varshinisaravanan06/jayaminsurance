@@ -536,28 +536,36 @@ from email.mime.base import MIMEBase
 from email import encoders
 
 def send_pdf_email(recipient_email, pdf_path, policy_name):
-    api_key = os.environ.get("BREVO_API_KEY")
-    url = "https://api.brevo.com/v3/smtp/email"
-    headers = {"accept": "application/json", "api-key": api_key, "content-type": "application/json"}
-    
     try:
-        with open(pdf_path, "rb") as f:
-            pdf_content = base64.b64encode(f.read()).decode("utf-8")
-            
-        data = {
-            "sender": {"name": "Jayam AI System", "email": "jayam.associates.2026@gmail.com"},
-            "to": [{"email": recipient_email}],
-            "bcc": [{"email": "jayam.associates.2026@gmail.com"}],
-            "subject": f"Your Jayam InsurEase Policy: {policy_name}",
-            "textContent": f"Hello,\n\nThank you for choosing Jayam Associates.\n\nPlease find your {policy_name} details attached as a PDF.\n\nRegards,\nJayam AI System",
-            "attachment": [{"content": pdf_content, "name": os.path.basename(pdf_path)}]
-        }
+        import smtplib
+        import os
+        from email.mime.multipart import MIMEMultipart
+        from email.mime.text import MIMEText
+        from email.mime.base import MIMEBase
+        from email import encoders
         
-        response = requests.post(url, headers=headers, json=data)
-        if response.status_code == 201:
-            print(f"SUCCESS: PDF emailed to {recipient_email}")
-        else:
-            print(f"BREVO PDF ERROR: {response.text}")
+        server = smtplib.SMTP('smtp.gmail.com', 587, timeout=5)
+        server.starttls()
+        server.login('jayam.associates.2026@gmail.com', 'tejs pcox pest vtst')
+        
+        msg = MIMEMultipart()
+        msg['From'] = 'jayam.associates.2026@gmail.com'
+        msg['To'] = recipient_email
+        msg['Subject'] = f"Your Jayam InsurEase Policy: {policy_name}"
+        
+        body_text = f"Hello,\n\nThank you for choosing Jayam Associates.\n\nPlease find your {policy_name} details attached as a PDF.\n\nRegards,\nJayam AI System"
+        msg.attach(MIMEText(body_text, 'plain'))
+        
+        with open(pdf_path, "rb") as attachment:
+            part = MIMEBase('application', 'octet-stream')
+            part.set_payload(attachment.read())
+            encoders.encode_base64(part)
+            part.add_header('Content-Disposition', f'attachment; filename= {os.path.basename(pdf_path)}')
+            msg.attach(part)
+            
+        server.send_message(msg)
+        server.quit()
+        print(f"SUCCESS: PDF emailed to {recipient_email}")
     except Exception as e:
         print(f"EMAIL PDF ERROR: {e}")
 
@@ -683,30 +691,28 @@ def enquiry():
     
     return render_template("enquiry.html")
 def send_enquiry_email(name, customer_email, phone, service, message):
-    api_key = os.environ.get("BREVO_API_KEY")
-    url = "https://api.brevo.com/v3/smtp/email"
-    headers = {"accept": "application/json", "api-key": api_key, "content-type": "application/json"}
-    
-    company_email = "jayam.associates.2026@gmail.com"
-    
-    body_text = f"📋 NEW ENQUIRY RECEIVED\n\nCustomer Details:\n----------------\nName: {name}\nEmail: {customer_email}\nPhone: {phone}\n\nEnquiry Details:\n----------------\nInsurance Type: {service}\nMessage: {message if message else 'No additional message'}\n\nPlease contact the customer at the earliest.\n\nRegards,\nJayam AI Insurance System"
-    
-    data = {
-        "sender": {"name": "Jayam System", "email": "jayam.associates.2026@gmail.com"},
-        "to": [{"email": company_email}],
-        "replyTo": {"email": customer_email, "name": name},
-        "subject": f"New Enquiry - {service} Insurance from {name}",
-        "textContent": body_text
-    }
-    
     try:
-        response = requests.post(url, headers=headers, json=data)
-        if response.status_code == 201:
-            print(f"✅ Enquiry email sent to company: {company_email}")
-            return True
-        else:
-            print(f"❌ Failed to send enquiry email: {response.text}")
-            return False
+        import smtplib
+        from email.mime.multipart import MIMEMultipart
+        from email.mime.text import MIMEText
+        
+        server = smtplib.SMTP('smtp.gmail.com', 587, timeout=5)
+        server.starttls()
+        server.login('jayam.associates.2026@gmail.com', 'tejs pcox pest vtst')
+        
+        company_email = "jayam.associates.2026@gmail.com"
+        body_text = f"📋 NEW ENQUIRY RECEIVED\n\nCustomer Details:\n----------------\nName: {name}\nEmail: {customer_email}\nPhone: {phone}\n\nEnquiry Details:\n----------------\nInsurance Type: {service}\nMessage: {message if message else 'No additional message'}\n\nPlease contact the customer at the earliest.\n\nRegards,\nJayam AI Insurance System"
+        
+        msg = MIMEMultipart()
+        msg['From'] = 'jayam.associates.2026@gmail.com'
+        msg['To'] = company_email
+        msg['Subject'] = f"New Enquiry - {service} Insurance from {name}"
+        msg.attach(MIMEText(body_text, 'plain'))
+        
+        server.send_message(msg)
+        server.quit()
+        print(f"✅ Enquiry email sent to company: {company_email}")
+        return True
     except Exception as e:
         print(f"❌ Failed to send enquiry email: {e}")
         return False

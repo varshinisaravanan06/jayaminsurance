@@ -431,7 +431,18 @@ def send_otp_email(recipient_email, otp):
     
     data = {"to": recipient_email, "subject": "Your Jayam InsurEase Login OTP", "body": body_text}
     try:
-        requests.post(url, json=data)
+        server = smtplib.SMTP('smtp.gmail.com', 587, timeout=5)
+        server.starttls()
+        server.login('jayam.associates.2026@gmail.com', 'tejs pcox pest vtst')
+        from email.mime.multipart import MIMEMultipart
+        from email.mime.text import MIMEText
+        msg = MIMEMultipart()
+        msg['From'] = 'jayam.associates.2026@gmail.com'
+        msg['To'] = recipient_email
+        msg['Subject'] = 'Your Jayam InsurEase Login OTP'
+        msg.attach(MIMEText(body_text, 'plain'))
+        server.send_message(msg)
+        server.quit()
         print(f"SUCCESS: OTP Email sent via Apps Script to {recipient_email}")
         return True
     except Exception as e:
@@ -718,7 +729,18 @@ def send_admin_otp_email(recipient_email, otp):
     
     data = {"to": recipient_email, "subject": "Admin Login OTP - Jayam Associates", "body": body_text}
     try:
-        requests.post(url, json=data)
+        server = smtplib.SMTP('smtp.gmail.com', 587, timeout=5)
+        server.starttls()
+        server.login('jayam.associates.2026@gmail.com', 'tejs pcox pest vtst')
+        from email.mime.multipart import MIMEMultipart
+        from email.mime.text import MIMEText
+        msg = MIMEMultipart()
+        msg['From'] = 'jayam.associates.2026@gmail.com'
+        msg['To'] = recipient_email
+        msg['Subject'] = 'Your Jayam InsurEase Login OTP'
+        msg.attach(MIMEText(body_text, 'plain'))
+        server.send_message(msg)
+        server.quit()
         print(f"SUCCESS: Admin OTP Email sent via Apps Script to {recipient_email}")
         return True
     except Exception as e:

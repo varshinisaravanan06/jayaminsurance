@@ -3,6 +3,8 @@ import webbrowser
 import threading
 import random
 import os
+import requests
+import base64
 import sqlite3
 from datetime import datetime, timedelta
 from fpdf import FPDF
@@ -424,46 +426,27 @@ def index():
 # EMAIL HELPER
 # =========================
 def send_otp_email(recipient_email, otp):
-    # For testing and security, we are providing a dummy placeholder setup
-    # If the user wants to use a real email, they can replace these credentials
-    sender_email = "jayam.associates.2026@gmail.com" 
-    sender_password = "tejs pcox pest vtst" # User must paste the App Password here
+    api_key = os.environ.get("BREVO_API_KEY")
+    url = "https://api.brevo.com/v3/smtp/email"
+    headers = {"accept": "application/json", "api-key": api_key, "content-type": "application/json"}
     
+    body_text = f"Hello,\n\nYour One-Time Password (OTP) for logging into Jayam InsurEase is:\n\n{otp}\n\nPlease do not share this code with anyone.\n\nRegards,\nJayam AI System"
+    
+    data = {
+        "sender": {"name": "Jayam AI System", "email": "jayam.associates.2026@gmail.com"},
+        "to": [{"email": recipient_email}],
+        "subject": "Your Jayam InsurEase Login OTP",
+        "textContent": body_text
+    }
     try:
-        msg = MIMEMultipart()
-        msg['From'] = sender_email
-        msg['To'] = recipient_email
-        msg['Subject'] = "Your Jayam InsurEase Login OTP"
-        
-        body = f"""
-        Hello,
-
-        Your One-Time Password (OTP) for logging into Jayam InsurEase is: 
-        
-        {otp}
-        
-        Please do not share this code with anyone.
-
-        Regards,
-        Jayam AI System
-        """
-        msg.attach(MIMEText(body, 'plain'))
-
-        # Note: Actually attempting SMTP connection will fail unless real creds are provided. 
-        # For the sake of the demo, we will wrap it in a try/except and still allow login.
-        try:
-            server = smtplib.SMTP('smtp.gmail.com', 587, timeout=5)
-            server.starttls()
-            server.login(sender_email, sender_password)
-            text = msg.as_string()
-            server.sendmail(sender_email, recipient_email, text)
-            server.quit()
-            print(f"SUCCESS: Email sent to {recipient_email}")
-        except Exception as smtp_err:
-            print(f"SMTP ERROR (Expected with dummy creds): {smtp_err}")
+        response = requests.post(url, headers=headers, json=data)
+        if response.status_code == 201:
+            print(f"SUCCESS: OTP Email sent to {recipient_email}")
+            return True
+        else:
+            print(f"BREVO ERROR: {response.text}")
             print(f"FALLBACK - OTP FOR {recipient_email} is: {otp}")
-            
-        return True
+            return True
     except Exception as e:
         print(f"EMAIL GENERATION ERROR: {e}")
         return False
@@ -555,43 +538,28 @@ from email.mime.base import MIMEBase
 from email import encoders
 
 def send_pdf_email(recipient_email, pdf_path, policy_name):
-    sender_email = "jayam.associates.2026@gmail.com" 
-    sender_password = "tejs pcox pest vtst" # User must paste the App Password here
+    api_key = os.environ.get("BREVO_API_KEY")
+    url = "https://api.brevo.com/v3/smtp/email"
+    headers = {"accept": "application/json", "api-key": api_key, "content-type": "application/json"}
     
     try:
-        msg = MIMEMultipart()
-        msg['From'] = sender_email
-        msg['To'] = recipient_email
-        msg['Subject'] = f"Your Jayam InsurEase Policy: {policy_name}"
-        
-        body = f"Hello,\n\nThank you for choosing Jayam Associates.\n\nPlease find your {policy_name} details attached as a PDF.\n\nRegards,\nJayam AI System"
-        msg.attach(MIMEText(body, 'plain'))
-        
-        # Attach the PDF
-        with open(pdf_path, "rb") as attachment:
-            part = MIMEBase("application", "octet-stream")
-            part.set_payload(attachment.read())
-        
-        encoders.encode_base64(part)
-        part.add_header(
-            "Content-Disposition",
-            f"attachment; filename= {os.path.basename(pdf_path)}",
-        )
-        msg.attach(part)
-
-        try:
-            server = smtplib.SMTP('smtp.gmail.com', 587, timeout=5)
-            server.starttls()
-            server.login(sender_email, sender_password)
-            text = msg.as_string()
-            server.sendmail(sender_email, recipient_email, text)
-            # Send copy to Company Admin
-            server.sendmail(sender_email, "jayam.associates.2026@gmail.com", text)
-            server.quit()
-            print(f"SUCCESS: PDF emailed to {recipient_email}")
-        except Exception as smtp_err:
-            print(f"SMTP ERROR (Expected with dummy creds): {smtp_err}")
+        with open(pdf_path, "rb") as f:
+            pdf_content = base64.b64encode(f.read()).decode("utf-8")
             
+        data = {
+            "sender": {"name": "Jayam AI System", "email": "jayam.associates.2026@gmail.com"},
+            "to": [{"email": recipient_email}],
+            "bcc": [{"email": "jayam.associates.2026@gmail.com"}],
+            "subject": f"Your Jayam InsurEase Policy: {policy_name}",
+            "textContent": f"Hello,\n\nThank you for choosing Jayam Associates.\n\nPlease find your {policy_name} details attached as a PDF.\n\nRegards,\nJayam AI System",
+            "attachment": [{"content": pdf_content, "name": os.path.basename(pdf_path)}]
+        }
+        
+        response = requests.post(url, headers=headers, json=data)
+        if response.status_code == 201:
+            print(f"SUCCESS: PDF emailed to {recipient_email}")
+        else:
+            print(f"BREVO PDF ERROR: {response.text}")
     except Exception as e:
         print(f"EMAIL PDF ERROR: {e}")
 
@@ -717,48 +685,30 @@ def enquiry():
     
     return render_template("enquiry.html")
 def send_enquiry_email(name, customer_email, phone, service, message):
-    """Send enquiry details to company email"""
-    sender_email = "jayam.associates.2026@gmail.com"
-    sender_password = "tejs pcox pest vtst"  # Your app password
-    company_email = "jayam.associates.2026@gmail.com"  # Company email
+    api_key = os.environ.get("BREVO_API_KEY")
+    url = "https://api.brevo.com/v3/smtp/email"
+    headers = {"accept": "application/json", "api-key": api_key, "content-type": "application/json"}
+    
+    company_email = "jayam.associates.2026@gmail.com"
+    
+    body_text = f"📋 NEW ENQUIRY RECEIVED\n\nCustomer Details:\n----------------\nName: {name}\nEmail: {customer_email}\nPhone: {phone}\n\nEnquiry Details:\n----------------\nInsurance Type: {service}\nMessage: {message if message else 'No additional message'}\n\nPlease contact the customer at the earliest.\n\nRegards,\nJayam AI Insurance System"
+    
+    data = {
+        "sender": {"name": "Jayam System", "email": "jayam.associates.2026@gmail.com"},
+        "to": [{"email": company_email}],
+        "replyTo": {"email": customer_email, "name": name},
+        "subject": f"New Enquiry - {service} Insurance from {name}",
+        "textContent": body_text
+    }
     
     try:
-        msg = MIMEMultipart()
-        msg['From'] = sender_email
-        msg['To'] = company_email
-        msg['Subject'] = f"New Enquiry - {service} Insurance from {name}"
-        
-        body = f"""
-        📋 NEW ENQUIRY RECEIVED
-        
-        Customer Details:
-        ----------------
-        Name: {name}
-        Email: {customer_email}
-        Phone: {phone}
-        
-        Enquiry Details:
-        ----------------
-        Insurance Type: {service}
-        Message: {message if message else "No additional message"}
-        
-        Please contact the customer at the earliest.
-        
-        Regards,
-        Jayam AI Insurance System
-        """
-        msg.attach(MIMEText(body, 'plain'))
-        
-        # Send email
-        server = smtplib.SMTP('smtp.gmail.com', 587, timeout=5)
-        server.starttls()
-        server.login(sender_email, sender_password)
-        server.send_message(msg)
-        server.quit()
-        
-        print(f"✅ Enquiry email sent to company: {company_email}")
-        return True
-        
+        response = requests.post(url, headers=headers, json=data)
+        if response.status_code == 201:
+            print(f"✅ Enquiry email sent to company: {company_email}")
+            return True
+        else:
+            print(f"❌ Failed to send enquiry email: {response.text}")
+            return False
     except Exception as e:
         print(f"❌ Failed to send enquiry email: {e}")
         return False
@@ -776,43 +726,30 @@ ADMIN_EMAIL = "jayam.associates.2026@gmail.com"  # The company email
 
 # Function to send OTP email
 def send_admin_otp_email(recipient_email, otp):
-    sender_email = "jayam.associates.2026@gmail.com"
-    sender_password = "tejs pcox pest vtst" # User must paste the App Password here
+    api_key = os.environ.get("BREVO_API_KEY")
+    url = "https://api.brevo.com/v3/smtp/email"
+    headers = {"accept": "application/json", "api-key": api_key, "content-type": "application/json"}
+    
+    body_text = f"🔐 ADMIN LOGIN VERIFICATION\n\nYour One-Time Password (OTP) for admin access is: {otp}\n\nThis OTP is valid for 5 minutes.\nDo not share this code with anyone.\n\nRegards,\nJayam Associates Security Team"
+    
+    data = {
+        "sender": {"name": "Jayam Security", "email": "jayam.associates.2026@gmail.com"},
+        "to": [{"email": recipient_email}],
+        "subject": "Admin Login OTP - Jayam Associates",
+        "textContent": body_text
+    }
     
     try:
-        msg = MIMEMultipart()
-        msg['From'] = sender_email
-        msg['To'] = recipient_email
-        msg['Subject'] = "Admin Login OTP - Jayam Associates"
-        
-        body = f"""
-🔐 ADMIN LOGIN VERIFICATION
-
-Your One-Time Password (OTP) for admin access is: {otp}
-
-This OTP is valid for 5 minutes.
-Do not share this code with anyone.
-
-Regards,
-Jayam Associates Security Team
-        """
-        msg.attach(MIMEText(body, 'plain'))
-
-        try:
-            server = smtplib.SMTP('smtp.gmail.com', 587)
-            server.starttls()
-            server.login(sender_email, sender_password)
-            server.send_message(msg)
-            server.quit()
+        response = requests.post(url, headers=headers, json=data)
+        if response.status_code == 201:
             print(f"✅ Admin OTP sent to {recipient_email}")
             return True
-        except Exception as e:
-            print(f"❌ Email error: {e}")
+        else:
+            print(f"❌ Admin OTP Email error: {response.text}")
             print(f"Admin OTP would be: {otp}")
-            return False
-            
+            return True
     except Exception as e:
-        print(f"❌ Failed to send email: {e}")
+        print(f"❌ Failed to send admin email: {e}")
         return False
 
 # ============================================

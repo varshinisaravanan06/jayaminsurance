@@ -452,7 +452,7 @@ def send_otp_email(recipient_email, otp):
         # Note: Actually attempting SMTP connection will fail unless real creds are provided. 
         # For the sake of the demo, we will wrap it in a try/except and still allow login.
         try:
-            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server = smtplib.SMTP('smtp.gmail.com', 587, timeout=5)
             server.starttls()
             server.login(sender_email, sender_password)
             text = msg.as_string()
@@ -580,7 +580,7 @@ def send_pdf_email(recipient_email, pdf_path, policy_name):
         msg.attach(part)
 
         try:
-            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server = smtplib.SMTP('smtp.gmail.com', 587, timeout=5)
             server.starttls()
             server.login(sender_email, sender_password)
             text = msg.as_string()
@@ -750,7 +750,7 @@ def send_enquiry_email(name, customer_email, phone, service, message):
         msg.attach(MIMEText(body, 'plain'))
         
         # Send email
-        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server = smtplib.SMTP('smtp.gmail.com', 587, timeout=5)
         server.starttls()
         server.login(sender_email, sender_password)
         server.send_message(msg)
